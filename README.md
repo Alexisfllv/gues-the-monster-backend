@@ -1,96 +1,127 @@
-# 🚀 Reglas y Flujo de Trabajo - Equipo Backend
+# 🧟‍♂️ Proyecto Monstruos API
 
-## 🧩 Estructura del Repositorio
-- **Ramas principales:**
-  - `main` → código estable (producción)
-  - `develop` → integración de nuevas funciones (desarrollo)
-- **Ramas temporales (de cada integrante):**
-  - `feature/` → nuevas funcionalidades
-  - `fix/` → corrección de errores
-  - `hotfix/` → arreglos urgentes sobre `main`
+API REST para la gestión de monstruos, desarrollada con **Spring Boot**, utilizando **Spring Web**, **Spring Data JPA**, **Lombok**, **MapStruct** y **PostgreSQL**.
 
 ---
 
-## 🔄 Flujo de Trabajo (Git Flow Simplificado)
-1. Clonar el repositorio:
-   ```bash
-   git clone <URL-del-repo>
-   git checkout develop
-   git pull
-   ```
+## 🧩 Tecnologías utilizadas
 
-2. Crear tu rama desde `develop`:
-   ```bash
-   git checkout -b feature/nombre-funcionalidad
-   ```
-
-3. Trabajar y realizar commits siguiendo el formato de **Conventional Commits**.
-
-4. Subir tu rama:
-   ```bash
-   git push origin feature/nombre-funcionalidad
-   ```
-
-5. Abrir un **Pull Request → `develop`**  
-   - El PR debe tener una descripción clara.  
-   - No hacer push directo a `develop` o `main`.
-
-6. Esperar revisión y aprobación del líder antes del merge.
-
-7. Cuando `develop` esté estable → se hace merge a `main` para producción.
+- **Java 17**
+- **Spring Boot**
+  - Spring Web
+  - Spring Data JPA
+- **PostgreSQL**
+- **Lombok**
+- **MapStruct**
+- **Maven**
 
 ---
 
-## 🏷️ Naming Conventions
-Usar nombres cortos, claros y en minúsculas:
-- `feature/login-api`
-- `feature/crear-evento`
-- `fix/error-validacion`
-- `hotfix/bug-deploy`
+## 🗄️ Modelo de Datos
 
----
+Representación ASCII de la tabla principal:
 
-## ✍️ Conventional Commits
-Formato:  
 ```
-<tipo>: <descripción corta>
-```
-
-**Tipos más usados:**
-- `feat:` nueva funcionalidad  
-- `fix:` corrección de error  
-- `refactor:` mejora de código sin cambiar funcionalidad  
-- `docs:` cambios en documentación  
-- `style:` formato o estilo (espacios, comas, etc.)  
-- `test:` agregar o modificar pruebas  
-
-**Ejemplos:**
-```bash
-git commit -m "feat: agregar endpoint para crear usuario"
-git commit -m "fix: corregir validación de correo"
++------------------+
+|    MONSTRUO      |
++------------------+
+| id              | SERIAL (PK, AUTOINCREMENT) |
+| nombre          | VARCHAR                    |
+| imagen_silueta  | VARCHAR (URL o ruta)       |
+| imagen_real     | VARCHAR (URL o ruta)       |
++------------------+
 ```
 
 ---
 
-## 🧠 Buenas Prácticas
-- Pull frecuente desde `develop` para evitar conflictos:
-  ```bash
-  git pull origin develop
-  ```
-- Commits pequeños y descriptivos.  
-- Revisar y comentar PRs de otros.  
-- No trabajar nunca directamente en `develop` ni `main`.  
-- Resolver conversaciones antes de hacer merge.
+## 🧠 Estructura del Proyecto
+
+```
+src/main/java/com/tuempresa/monstruos
+│
+├── controller      # Controladores REST
+├── service         # Lógica de negocio
+├── repository      # Interfaces JPA
+├── entity          # Entidades JPA
+├── dto             # Clases DTO
+└── mapper          # MapStruct mappers
+```
 
 ---
 
-## 👑 Roles
-- **Líder Backend:** controla merges a `develop` y `main`.  
-- **Colaboradores:** crean ramas, hacen PRs y esperan aprobación.
+## ⚙️ Configuración
+
+Archivo `application.properties` ejemplo:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/monstruosdb
+spring.datasource.username=postgres
+spring.datasource.password=tu_contraseña
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
 
 ---
 
-**💬 Recordatorio:**  
-El orden, los nombres y las revisiones garantizan un flujo limpio, colaborativo y sin conflictos.  
-Cualquier duda, consultarla antes de hacer un merge.
+## 🚀 Ejecución
 
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tuusuario/monstruos-api.git
+   ```
+
+2. Compila y ejecuta:
+   ```bash
+   mvn spring-boot:run
+   ```
+
+3. La API estará disponible en:
+   ```
+   http://localhost:8080/api/monstruos
+   ```
+
+---
+
+## 🧾 Endpoints esperados (ejemplo)
+
+| Método | Endpoint               | Descripción                  |
+|--------|------------------------|------------------------------|
+| GET    | /api/monstruos         | Lista todos los monstruos    |
+| GET    | /api/monstruos/{id}    | Obtiene un monstruo por ID   |
+| POST   | /api/monstruos         | Crea un nuevo monstruo       |
+| PUT    | /api/monstruos/{id}    | Actualiza un monstruo        |
+| DELETE | /api/monstruos/{id}    | Elimina un monstruo          |
+
+---
+
+## 🧰 Dependencias principales (pom.xml)
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <optional>true</optional>
+    </dependency>
+    <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>1.5.5.Final</version>
+    </dependency>
+</dependencies>
+```
+
+---
+---
